@@ -4,7 +4,7 @@
 
 function createGroundPlane()
 {
-    var texture = THREE.ImageUtils.loadTexture('./assets/images/neon.jpg');
+    var texture = THREE.ImageUtils.loadTexture('./assets/images/pinkplane.jpg');
 
     var planeMaterial = new Physijs.createMaterial(new THREE.MeshLambertMaterial({map:texture}), .4, .8 );
     var planeGeometry = new THREE.PlaneGeometry( 200, 200, 6 );
@@ -12,6 +12,20 @@ function createGroundPlane()
     groundPlane.name = "GroundPlane";
 
     scene.add( groundPlane );
+}
+
+function background(){
+    var texture = THREE.ImageUtils.loadTexture('./assets/images/cyberpunkbackdrop.jpg');
+
+    var geometry = new THREE.BoxGeometry( 2060, 2, 200 );
+    var material = new THREE.MeshBasicMaterial( {map:texture} );
+    var plane = new THREE.Mesh( geometry, material );
+
+    plane.position.x = -100;
+    plane.position.y = 100;
+    plane.position.z = 50;
+
+    scene.add( plane );
 }
 
 function createCannon()
@@ -26,16 +40,18 @@ function createCannon()
     cannon.add( cannonBarrel );
 
     cannon.rotation.z = Math.PI / 2;
-    cannon.position.x -= 84;
-    cannon.position.z += 20;
+    cannon.position.x -= 140;
+    cannon.position.z += 10;
     cannon.name = "CannonBall";
     scene.add( cannon );
 }
 
+
+
 function createBall()
 {
-    var ballGeometry = new THREE.SphereGeometry( 3 );
-    var ballMaterial = Physijs.createMaterial( new THREE.MeshLambertMaterial({color:'white'}), .95, .95 );
+    var ballGeometry = new THREE.SphereGeometry( 2.05 );
+    var ballMaterial = Physijs.createMaterial( new THREE.MeshLambertMaterial({color:'#32cd32'}), .95, .95 );
     ball = new Physijs.SphereMesh( ballGeometry, ballMaterial );
 
     ball.position.x = cannon.position.x + Math.cos((Math.PI/2)-cannon.rotation.z) * 10;
@@ -48,14 +64,17 @@ function createBall()
     {
         if( other_object.name !== "GroundPlane" )
         {
+            totalScore++;
+            document.getElementById('score').innerHTML = 'Score: ' + getScore();
+            //console.log('hit');
         }
     });
 }
 
-var targetlist;
+var targetList;
 function createTarget()
 {
-    targetlist = [];
+    targetList = [];
 
     for( var i=0; i<4; i++ )
     {
@@ -70,7 +89,7 @@ function createTarget()
             case 3: msh.position.x = 85; msh.position.y = -5; break;
         }
         msh.position.z = 6;
-        targetlist.push( msh );
+        targetList.push( msh );
         scene.add( msh );
     }
 
@@ -88,7 +107,7 @@ function createTarget()
 function backgroundTexture(backgroundScene, backgroundCamera) {
     var texture = THREE.ImageUtils.loadTexture( './assets/images/neonbackdrop.jpg' );
     var backgroundMesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(2, 2, 0),
+        new THREE.PlaneGeometry(2, 2, 10),
         new THREE.MeshBasicMaterial({
             map: texture
         }));
@@ -101,4 +120,40 @@ function backgroundTexture(backgroundScene, backgroundCamera) {
     backgroundCamera = new THREE.Camera();
     backgroundScene .add(backgroundCamera );
     backgroundScene .add(backgroundMesh );
+}
+
+function board(){
+    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+}
+
+
+var scoreObject = null;
+var scoreValue = 0;
+function createScoreBoard(){
+
+    if( scoreObject !== null )
+    {
+        scene.remove( scoreObject );
+    }
+
+    var scoreString = "" + scoreValue;
+    var scoreObjectGeometry = new THREE.TextGeometry( scoreString,
+        {
+            size: 2,
+            height: 0.4,
+            curveSegments: 10,
+            bevelEnabled: false
+        });
+
+    var scoreObjectMaterial = new THREE.MeshLambertMaterial({color:0xFF0022});
+
+    scoreObject = new THREE.Mesh( scoreObjectGeometry, scoreObjectMaterial );
+    scoreObject.position.x = 0;
+    scoreObject.position.y = 0;
+    scoreObject.position.z = 0;
+    scoreObject.rotation.x = 25 * Math.PI / 180;
+    scene.add( scoreObject );
 }

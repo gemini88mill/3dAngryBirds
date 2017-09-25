@@ -5429,7 +5429,7 @@ THREE.Ray.prototype = {
 					if ( s1 <= extDet ) {
 
 						// region 0
-						// Minimum at interior points of ray and segment.
+						// Minimum at interior score of ray and segment.
 
 						var invDet = 1 / det;
 						s0 *= invDet;
@@ -6224,7 +6224,7 @@ THREE.Plane.prototype = {
 
 	isIntersectionLine: function ( line ) {
 
-		// Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
+		// Note: this tests if a line intersects the plane, not whether it (or its end-score) are coplanar with it.
 
 		var startSign = this.distanceToPoint( line.start );
 		var endSign = this.distanceToPoint( line.end );
@@ -6626,8 +6626,8 @@ THREE.Spline = function ( points ) {
 
 		for ( i = 1; i < this.points.length; i++ ) {
 
-			//tmpVec.copy( this.points[ i - 1 ] );
-			//linearDistance = tmpVec.distanceTo( this.points[ i ] );
+			//tmpVec.copy( this.score[ i - 1 ] );
+			//linearDistance = tmpVec.distanceTo( this.score[ i ] );
 
 			realDistance = sl.chunks[ i ] - sl.chunks[ i - 1 ];
 
@@ -10531,7 +10531,7 @@ THREE.Geometry.prototype = {
 		var unique = [], changes = [];
 
 		var v, key;
-		var precisionPoints = 4; // number of decimal points, eg. 4 for epsilon of 0.0001
+		var precisionPoints = 4; // number of decimal score, eg. 4 for epsilon of 0.0001
 		var precision = Math.pow( 10, precisionPoints );
 		var i,il, face;
 		var indices, k, j, jl, u;
@@ -27700,7 +27700,7 @@ THREE.GeometryUtils = {
 
 	},
 
-	// Get uniformly distributed random points in mesh
+	// Get uniformly distributed random score in mesh
 	// 	- create array with cumulative sums of face areas
 	//  - pick random number from 0 to total area
 	//  - find corresponding place in area array by binary search
@@ -29065,7 +29065,7 @@ THREE.Curve.prototype.getPointAt = function ( u ) {
 
 };
 
-// Get sequence of points using getPoint( t )
+// Get sequence of score using getPoint( t )
 
 THREE.Curve.prototype.getPoints = function ( divisions ) {
 
@@ -29083,7 +29083,7 @@ THREE.Curve.prototype.getPoints = function ( divisions ) {
 
 };
 
-// Get sequence of points using getPointAt( u )
+// Get sequence of score using getPointAt( u )
 
 THREE.Curve.prototype.getSpacedPoints = function ( divisions ) {
 
@@ -29154,7 +29154,7 @@ THREE.Curve.prototype.updateArcLengths = function() {
 	this.getLengths();
 };
 
-// Given u ( 0 .. 1 ), get a t to find p. This gives you points which are equi distance
+// Given u ( 0 .. 1 ), get a t to find p. This gives you score which are equi distance
 
 THREE.Curve.prototype.getUtoTmapping = function ( u, distance ) {
 
@@ -29218,14 +29218,14 @@ THREE.Curve.prototype.getUtoTmapping = function ( u, distance ) {
 
 	}
 
-	// we could get finer grain at lengths, or use simple interpolatation between two points
+	// we could get finer grain at lengths, or use simple interpolatation between two score
 
 	var lengthBefore = arcLengths[ i ];
     var lengthAfter = arcLengths[ i + 1 ];
 
     var segmentLength = lengthAfter - lengthBefore;
 
-    // determine where we are between the 'before' and 'after' points
+    // determine where we are between the 'before' and 'after' score
 
     var segmentFraction = ( targetArcLength - lengthBefore ) / segmentLength;
 
@@ -29239,7 +29239,7 @@ THREE.Curve.prototype.getUtoTmapping = function ( u, distance ) {
 
 // Returns a unit vector tangent at t
 // In case any sub curve does not implement its tangent derivation,
-// 2 points a small delta apart will be used to find its gradient
+// 2 score a small delta apart will be used to find its gradient
 // which seems to give a reasonable approximation
 
 THREE.Curve.prototype.getTangent = function( t ) {
@@ -29401,7 +29401,7 @@ THREE.CurvePath.prototype.getPoint = function( t ) {
 	var curveLengths = this.getCurveLengths();
 	var i = 0, diff, curve;
 
-	// To think about boundaries points.
+	// To think about boundaries score.
 
 	while ( i < curveLengths.length ) {
 
@@ -29540,7 +29540,7 @@ THREE.CurvePath.prototype.getBoundingBox = function () {
  *	Create Geometries Helpers
  **************************************************************/
 
-/// Generate geometry from path points (for Line or ParticleSystem objects)
+/// Generate geometry from path score (for Line or ParticleSystem objects)
 
 THREE.CurvePath.prototype.createPointsGeometry = function( divisions ) {
 
@@ -29730,7 +29730,7 @@ THREE.Gyroscope.prototype.scaleObject = new THREE.Vector3();
 
 /**
  * @author zz85 / http://www.lab4games.net/zz85/blog
- * Creates free form 2d path using series of points, lines or curves.
+ * Creates free form 2d path using series of score, lines or curves.
  *
  **/
 
@@ -29763,7 +29763,7 @@ THREE.PathActions = {
 
 // TODO Clean up PATH API
 
-// Create path using straight lines to connect all points
+// Create path using straight lines to connect all score
 // - vectors: array of Vector2
 
 THREE.Path.prototype.fromPoints = function ( vectors ) {
@@ -29924,7 +29924,7 @@ THREE.Path.prototype.getSpacedPoints = function ( divisions, closedPath ) {
 
 	// if ( closedPath ) {
 	//
-	// 	points.push( points[ 0 ] );
+	// 	score.push( score[ 0 ] );
 	//
 	// }
 
@@ -30102,7 +30102,7 @@ THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
 
 			}
 
-			//console.log(points);
+			//console.log(score);
 
 		  break;
 		  
@@ -30140,7 +30140,7 @@ THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
 
 			}
 
-			//console.log(points);
+			//console.log(score);
 
 		  break;
 
@@ -30412,7 +30412,7 @@ THREE.Path.prototype.toShapes = function( isCCW, noHoles ) {
 // STEP 1 Create a path.
 // STEP 2 Turn path into shape.
 // STEP 3 ExtrudeGeometry takes in Shape/Shapes
-// STEP 3a - Extract points from each shape, turn to vertices
+// STEP 3a - Extract score from each shape, turn to vertices
 // STEP 3b - Triangulate each shape, add faces.
 
 THREE.Shape = function () {
@@ -30442,7 +30442,7 @@ THREE.Shape.prototype.makeGeometry = function ( options ) {
 
 };
 
-// Get points of holes
+// Get score of holes
 
 THREE.Shape.prototype.getPointsHoles = function ( divisions ) {
 
@@ -30458,7 +30458,7 @@ THREE.Shape.prototype.getPointsHoles = function ( divisions ) {
 
 };
 
-// Get points of holes (spaced by regular distance)
+// Get score of holes (spaced by regular distance)
 
 THREE.Shape.prototype.getSpacedPointsHoles = function ( divisions ) {
 
@@ -30475,7 +30475,7 @@ THREE.Shape.prototype.getSpacedPointsHoles = function ( divisions ) {
 };
 
 
-// Get points of shape and holes (keypoints based on segments parameter)
+// Get score of shape and holes (keypoints based on segments parameter)
 
 THREE.Shape.prototype.extractAllPoints = function ( divisions ) {
 
@@ -30510,7 +30510,7 @@ THREE.Shape.prototype.extractPoints = function ( divisions ) {
 //
 // };
 
-// Get points of shape and holes (spaced by regular distance)
+// Get score of shape and holes (spaced by regular distance)
 
 THREE.Shape.prototype.extractAllSpacedPoints = function ( divisions ) {
 
@@ -30601,10 +30601,10 @@ THREE.Shape.Utils = {
 				// they are collinear or degenerate
 				var seg1Pt = ( (seg1dx == 0) && (seg1dy == 0) );	// segment1 ist just a point?
 				var seg2Pt = ( (seg2dx == 0) && (seg2dy == 0) );	// segment2 ist just a point?
-				// both segments are points
+				// both segments are score
 				if ( seg1Pt && seg2Pt ) {
 					if ( (inSeg1Pt1.x != inSeg2Pt1.x) ||
-						 (inSeg1Pt1.y != inSeg2Pt1.y) )		return [];   	// they are distinct  points
+						 (inSeg1Pt1.y != inSeg2Pt1.y) )		return [];   	// they are distinct  score
 					return  [ inSeg1Pt1 ];                 					// they are the same point
 				}
 				// segment#1  is a single point
@@ -30677,7 +30677,7 @@ THREE.Shape.Utils = {
 
 			var EPSILON = 0.0000000001;
 
-			// translation of all points, so that Vertex is at (0,0)
+			// translation of all score, so that Vertex is at (0,0)
 			var legFromPtX	= inLegFromPt.x - inVertex.x,  legFromPtY	= inLegFromPt.y - inVertex.y;
 			var legToPtX	= inLegToPt.x	- inVertex.x,  legToPtY		= inLegToPt.y	- inVertex.y;
 			var otherPtX	= inOtherPt.x	- inVertex.x,  otherPtY		= inOtherPt.y	- inVertex.y;
@@ -30859,7 +30859,7 @@ THREE.Shape.Utils = {
 
 		//console.log( "allpoints",allpoints, allpoints.length );
 
-		// prepare all points map
+		// prepare all score map
 
 		for ( i = 0, il = allpoints.length; i < il; i ++ ) {
 
@@ -30878,10 +30878,10 @@ THREE.Shape.Utils = {
 		// remove holes by cutting paths to holes and adding them to the shape
 		var shapeWithoutHoles = removeHoles( contour, holes );
 
-		var triangles = THREE.FontUtils.Triangulate( shapeWithoutHoles, false ); // True returns indices for points of spooled shape
+		var triangles = THREE.FontUtils.Triangulate( shapeWithoutHoles, false ); // True returns indices for score of spooled shape
 		//console.log( "triangles",triangles, triangles.length );
 
-		// check all face vertices against all points map
+		// check all face vertices against all score map
 
 		for ( i = 0, il = triangles.length; i < il; i ++ ) {
 
@@ -31319,21 +31319,21 @@ THREE.SplineCurve3 = THREE.Curve.create(
 // THREE.SplineCurve3.prototype.getTangent = function(t) {
 // 		var v = new THREE.Vector3();
 // 		var c = [];
-// 		var points = this.points, point, intPoint, weight;
-// 		point = ( points.length - 1 ) * t;
+// 		var score = this.score, point, intPoint, weight;
+// 		point = ( score.length - 1 ) * t;
 
 // 		intPoint = Math.floor( point );
 // 		weight = point - intPoint;
 
 // 		c[ 0 ] = intPoint == 0 ? intPoint : intPoint - 1;
 // 		c[ 1 ] = intPoint;
-// 		c[ 2 ] = intPoint  > points.length - 2 ? points.length - 1 : intPoint + 1;
-// 		c[ 3 ] = intPoint  > points.length - 3 ? points.length - 1 : intPoint + 2;
+// 		c[ 2 ] = intPoint  > score.length - 2 ? score.length - 1 : intPoint + 1;
+// 		c[ 3 ] = intPoint  > score.length - 3 ? score.length - 1 : intPoint + 2;
 
-// 		var pt0 = points[ c[0] ],
-// 			pt1 = points[ c[1] ],
-// 			pt2 = points[ c[2] ],
-// 			pt3 = points[ c[3] ];
+// 		var pt0 = score[ c[0] ],
+// 			pt1 = score[ c[1] ],
+// 			pt2 = score[ c[2] ],
+// 			pt3 = score[ c[3] ];
 
 // 	// t = weight;
 // 	v.x = THREE.Curve.Utils.tangentSpline( t, pt0.x, pt1.x, pt2.x, pt3.x );
@@ -33075,8 +33075,8 @@ THREE.CylinderGeometry.prototype = Object.create( THREE.Geometry.prototype );
  *
  * parameters = {
  *
- *  curveSegments: <int>, // number of points on the curves
- *  steps: <int>, // number of points for z-side extrusions / used for subdividing segements of extrude spline too
+ *  curveSegments: <int>, // number of score on the curves
+ *  steps: <int>, // number of score for z-side extrusions / used for subdividing segements of extrude spline too
  *  amount: <int>, // Depth to extrude the shape
  *
  *  bevelEnabled: <bool>, // turn on bevel
@@ -33235,7 +33235,7 @@ THREE.ExtrudeGeometry.prototype.addShape = function ( shape, options ) {
 
 	/* Vertices */
 
-	var contour = vertices; // vertices has all points but contour has only points of circumference
+	var contour = vertices; // vertices has all score but contour has only score of circumference
 
 	for ( h = 0, hl = holes.length;  h < hl; h ++ ) {
 
@@ -33297,7 +33297,7 @@ THREE.ExtrudeGeometry.prototype.addShape = function ( shape, options ) {
 			var v_prev_len = Math.sqrt( v_prev_lensq );
 			var v_next_len = Math.sqrt( v_next_x * v_next_x + v_next_y * v_next_y );
 			
-			// shift adjacent points by unit vectors to the left
+			// shift adjacent score by unit vectors to the left
 	
 			var ptPrevShift_x = ( inPrev.x - v_prev_y / v_prev_len );
 			var ptPrevShift_y = ( inPrev.y + v_prev_x / v_prev_len );
@@ -33783,7 +33783,7 @@ THREE.ExtrudeGeometry.__v6 = new THREE.Vector2();
  *
  * parameters = {
  *
- *	curveSegments: <int>, // number of points on the curves. NOT USED AT THE MOMENT.
+ *	curveSegments: <int>, // number of score on the curves. NOT USED AT THE MOMENT.
  *
  *	material: <int> // material index for front and back faces
  *	uvGenerator: <Object> // object that provides UV generator functions
@@ -33917,7 +33917,7 @@ THREE.ShapeGeometry.prototype.addShape = function ( shape, options ) {
  * @author bhouston / http://exocortex.com
  */
 
-// points - to create a closed torus, one must use a set of points 
+// score - to create a closed torus, one must use a set of score
 //    like so: [ a, b, c, d, a ], see first is the same as last.
 // segments - the number of circumference segments to create
 // phiStart - the starting radian
@@ -34282,7 +34282,7 @@ THREE.SphereGeometry.prototype = Object.create( THREE.Geometry.prototype );
  * parameters = {
  *  size: 			<float>, 	// size of the text
  *  height: 		<float>, 	// thickness to extrude text
- *  curveSegments: 	<int>,		// number of points on the curves
+ *  curveSegments: 	<int>,		// number of score on the curves
  *
  *  font: 			<string>,		// font name
  *  weight: 		<string>,		// font weight (normal, bold)
@@ -37036,7 +37036,7 @@ THREE.LensFlarePlugin = function () {
 
 	/*
 	 * Render lens flares
-	 * Method: renders 16x16 0xff00ff-colored points scattered over the light source area,
+	 * Method: renders 16x16 0xff00ff-colored score scattered over the light source area,
 	 *         reads these back and calculates occlusion.
 	 *         Then _lensFlare.update_lensFlares() is called to re-position and
 	 *         update transparency of flares. Then they are rendered.

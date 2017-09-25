@@ -55,3 +55,12 @@ function maintainBallKeypresses()
         scene.remove( ball );
     }
 }
+
+function hintMenu(){
+    var x = document.getElementById('hintMenu');
+    if(x.style.display === 'none'){
+        x.style.display = 'block';
+    } else{
+        x.style.display = 'none';
+    }
+}

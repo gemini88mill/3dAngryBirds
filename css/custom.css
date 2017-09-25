@@ -1,0 +1,15 @@
+html{
+    background-color: black;
+}
+
+@font-face {
+    font-family: VCR;
+    src: url("../fonts/VCR_OSD_MONO_1.001.ttf");
+    font-weight: 400;
+}
+
+.title {
+    font-family: VCR, sans-serif;
+    background-color: black;
+    color: white;
+}

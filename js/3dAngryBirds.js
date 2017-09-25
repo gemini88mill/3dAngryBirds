@@ -32,6 +32,7 @@ function init()
 
     <!-- 5. Ground plane -->
     createGroundPlane();
+    background();
 
     <!-- 7. Create and add cannon -->
     createCannon();
@@ -43,6 +44,10 @@ function init()
     createTarget();
 
     loadBackgroundMusic();
+    //backgroundTexture(backgroundScene, backgroundCamera);
+
+
+    //createScoreBoard();
 
     // Output to the stream
     document.body.appendChild( renderer.domElement );
@@ -68,7 +73,8 @@ function render()
     <!-- 15. Check for ball off the plane -->
     checkBallPosition();
 
-    //backgroundTexture(backgroundScene, backgroundCamera);
+
+
 
     // Request animation frame
     requestAnimationFrame( render );
