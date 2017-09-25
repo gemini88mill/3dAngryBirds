@@ -9,8 +9,6 @@ var camera;
 var spotLight;
 var smsh;
 
-var backgroundScene;
-var backgroundCamera;
 
 <!-- add objects in the scope so all methods can access -->
 var groundPlane;
@@ -44,10 +42,6 @@ function init()
     createTarget();
 
     loadBackgroundMusic();
-    //backgroundTexture(backgroundScene, backgroundCamera);
-
-
-    //createScoreBoard();
 
     // Output to the stream
     document.body.appendChild( renderer.domElement );
